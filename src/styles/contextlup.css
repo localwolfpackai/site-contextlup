@@ -1,0 +1,145 @@
+/* ============================================================================
+   ContextLup — design system
+   Calm, technical, high-contrast. Light-first. Editorial-tech.
+   Overrides Starlight's tokens (the real --sl-* variables) with a restrained
+   neutral palette, a Geist/Inter pairing, and an 8pt-aligned reading measure.
+   ========================================================================== */
+
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/geist-mono';
+
+/* --- Type --------------------------------------------------------------- */
+:root {
+  /* DESIGN: Geist carries UI/body; Geist Mono for code (~10% of type). */
+  --sl-font: 'Geist Variable', 'Inter Variable', system-ui, sans-serif;
+  --sl-font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+
+  /* A calm technical blue — used as signal, never as decoration. */
+  --cl-accent-hue: 222;
+}
+
+/* --- Light mode (the default) ------------------------------------------- */
+:root[data-theme='light'] {
+  /* Near-neutral grays, high-contrast ink. Warmth kept out on purpose. */
+  --sl-color-white: hsl(220, 13%, 9%); /* primary ink */
+  --sl-color-gray-1: hsl(220, 11%, 18%);
+  --sl-color-gray-2: hsl(220, 9%, 31%);
+  --sl-color-gray-3: hsl(220, 7%, 46%);
+  --sl-color-gray-4: hsl(220, 9%, 62%);
+  --sl-color-gray-5: hsl(220, 13%, 82%);
+  --sl-color-gray-6: hsl(220, 18%, 92%);
+  --sl-color-gray-7: hsl(220, 24%, 97%);
+  --sl-color-black: hsl(0, 0%, 100%); /* page background */
+
+  --sl-color-accent-low: hsl(var(--cl-accent-hue), 90%, 93%);
+  --sl-color-accent: hsl(var(--cl-accent-hue), 78%, 50%);
+  --sl-color-accent-high: hsl(var(--cl-accent-hue), 70%, 32%);
+
+  --sl-color-text-accent: var(--sl-color-accent-high);
+  --sl-color-bg-sidebar: var(--sl-color-black);
+  --sl-color-hairline: hsl(220, 16%, 90%);
+  --sl-color-hairline-light: hsl(220, 16%, 90%);
+}
+
+/* --- Dark mode (available, but light is home) --------------------------- */
+:root[data-theme='dark'] {
+  --sl-color-white: hsl(220, 20%, 97%);
+  --sl-color-gray-1: hsl(220, 14%, 88%);
+  --sl-color-gray-2: hsl(220, 9%, 75%);
+  --sl-color-gray-3: hsl(220, 8%, 55%);
+  --sl-color-gray-4: hsl(220, 9%, 38%);
+  --sl-color-gray-5: hsl(220, 12%, 24%);
+  --sl-color-gray-6: hsl(220, 16%, 15%);
+  --sl-color-black: hsl(220, 22%, 8%);
+
+  --sl-color-accent-low: hsl(var(--cl-accent-hue), 45%, 18%);
+  --sl-color-accent: hsl(var(--cl-accent-hue), 85%, 62%);
+  --sl-color-accent-high: hsl(var(--cl-accent-hue), 90%, 84%);
+
+  --sl-color-text-accent: var(--sl-color-accent-high);
+  --sl-color-hairline: hsl(220, 16%, 16%);
+  --sl-color-hairline-light: hsl(220, 16%, 16%);
+}
+
+/* --- Reading measure & rhythm ------------------------------------------- */
+/* DESIGN: a tighter content width reads more editorial than the wide default. */
+:root {
+  --sl-content-width: 50rem;
+  --sl-line-height: 1.7;
+}
+
+/* The site title sits a touch tighter and heavier — a small wordmark cue. */
+.site-title {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* The /L monogram in the header inherits ink color via currentColor. */
+.site-title svg,
+header .site-title img {
+  color: var(--sl-color-white);
+}
+
+/* --- Headings: tightened tracking for the editorial-tech feel ----------- */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.content-panel h1 {
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* --- Inline code & blocks: mono carries the technical signal ------------ */
+.sl-markdown-content code:not(:where(.expressive-code *)) {
+  font-size: 0.875em;
+  letter-spacing: -0.01em;
+}
+
+/* --- Tables: hairlines, not heavy borders ------------------------------- */
+.sl-markdown-content table {
+  font-size: var(--sl-text-sm);
+}
+.sl-markdown-content th {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* --- Hero (splash homepage): give the tagline room to breathe ----------- */
+.hero > .stack {
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+.hero .tagline {
+  max-width: 42ch;
+  text-wrap: balance;
+}
+
+/* --- Cards: calmer borders, subtle lift on hover ------------------------ */
+.card {
+  border-color: var(--sl-color-hairline);
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--sl-color-accent);
+    transform: translateY(-2px);
+  }
+}
+
+/* A11Y: honor reduced-motion — kill the lift for anyone who opts out. */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* --- Footer note: quiet, mono, low-key ---------------------------------- */
+footer .meta {
+  font-family: var(--sl-font-mono);
+  font-size: var(--sl-text-2xs);
+  letter-spacing: 0.01em;
+}

@@ -1,0 +1,40 @@
+---
+title: Agent Protocol
+description: How to consume ContextLup as a machine — the manifest, the endpoints, and the one-line prompt that loads it all.
+sidebar:
+  order: 2
+---
+
+This site is dual-surface. Humans read prose; agents read JSON. Both are generated from the same source, so the API never drifts from the docs.
+
+## Start here
+
+```text
+GET /api/manifest.json
+```
+
+The manifest is the map. It returns the identity, the four pillars, and a link to every other endpoint. An agent should load this first and follow the links it needs.
+
+## Endpoints
+
+| Endpoint | Returns |
+| --- | --- |
+| [`/api/manifest.json`](/api/manifest.json) | The index — identity, pillars, and links to everything below. |
+| [`/api/identity.json`](/api/identity.json) | Core directive and design DNA. The "who" and the "how to think." |
+| [`/api/directives.json`](/api/directives.json) | Every hard constraint, flattened into an applicable rule list. |
+| [`/api/nodes.json`](/api/nodes.json) | All Context Nodes across every pillar — the full graph. |
+| [`/llms.txt`](/llms.txt) | A plain-text map of the whole brain, for crawlers and quick context. |
+
+Each rule in the API carries a `why`. That field is the high-signal part — it's what lets an agent generalize to a situation the rule didn't explicitly cover, instead of pattern-matching the literal text.
+
+## The one-line prompt
+
+When I'm working with an agent, I don't re-explain myself. I point it here:
+
+> I'm working on **[project]**. Load `https://contextlup.com/api/manifest.json` for my design DNA, constraints, and operating style, then apply them to everything you produce.
+
+That's the whole pitch. The agent loads the methodology and works as an extension of how I'd have done it.
+
+## Why JSON *and* prose
+
+Keeping a separate hand-written manifest in sync with hand-written docs is a losing game — they drift the first time you update one and forget the other. So neither is hand-written twice. Every page carries a structured `node` block in its frontmatter; the human prose and the machine JSON are both projections of that single block. Edit a rule once, both surfaces update on the next build.

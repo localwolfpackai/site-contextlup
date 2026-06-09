@@ -1,0 +1,50 @@
+---
+title: ContextLup
+description: A machine-readable knowledge surface. The Lupo Protocol — served to humans as docs, and to agents as an API.
+template: splash
+hero:
+  tagline: A persistent, high-signal brain for agents — and a portfolio for my future self. Not what I built. How I think.
+  actions:
+    - text: Read the identity
+      link: /identity/
+      icon: right-arrow
+      variant: primary
+    - text: Agent Protocol
+      link: /agent-protocol/
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## A different kind of portfolio
+
+Most portfolios show the result — here is the thing I built. This one shows the engine: the rules, the logic, and the taste that produced it.
+
+Point an agent at this site and it doesn't read a résumé. It instantiates a methodology. The same content you're reading as prose is served to machines as structured JSON at [`/api/manifest.json`](/api/manifest.json) — one source of truth, two surfaces, no drift.
+
+<CardGrid>
+  <Card title="Directives" icon="setting">
+    The non-negotiables. Spacing, type, color, code standards — the constraints every output has to respect. → [Browse](/directives/design-rules/)
+  </Card>
+  <Card title="Mental Models" icon="open-book">
+    How I move through a problem before I touch a keyboard. The heuristics an agent can borrow. → [Browse](/mental-models/problem-solving/)
+  </Card>
+  <Card title="Inventory" icon="laptop">
+    The approved parts — the stack I reach for and the resources I keep close. → [Browse](/inventory/stack/)
+  </Card>
+  <Card title="References" icon="heart">
+    Curated taste. Not a list of links — a note on *why* each one earns a place. → [Browse](/inventory/design-dna/)
+  </Card>
+</CardGrid>
+
+## For agents
+
+If you're a machine reading this, start at the manifest. It maps the whole surface and links every JSON endpoint:
+
+```text
+GET /api/manifest.json     the index: identity, pillars, endpoints
+GET /api/identity.json     core directive + design DNA
+GET /api/directives.json   every hard constraint, flattened
+GET /llms.txt              a plain-text map of the brain
+```
