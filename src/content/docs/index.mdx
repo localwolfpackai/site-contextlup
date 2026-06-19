@@ -4,6 +4,25 @@ description: A machine-readable knowledge surface. The Lupo Protocol — served 
 template: splash
 hero:
   tagline: A persistent, high-signal brain for agents — and a portfolio for my future self. Not what I built. How I think.
+  image:
+    html: |
+      <div class="agent-view" role="img" aria-label="What an agent sees: the ContextLup manifest as JSON">
+        <div class="agent-view__bar">
+          <span class="agent-view__dot"></span>
+          <span class="agent-view__dot"></span>
+          <span class="agent-view__dot"></span>
+          <span class="agent-view__path">GET /api/manifest.json</span>
+        </div>
+        <pre class="agent-view__code"><code><span class="t-p">{</span>
+        <span class="t-k">"identity"</span><span class="t-p">:</span> <span class="t-s">"Lupo"</span><span class="t-p">,</span>
+        <span class="t-k">"version"</span><span class="t-p">:</span> <span class="t-s">"1.0.0"</span><span class="t-p">,</span>
+        <span class="t-k">"design_dna"</span><span class="t-p">:</span> <span class="t-p">{</span>
+          <span class="t-k">"spacing"</span><span class="t-p">:</span> <span class="t-s">"8pt grid"</span><span class="t-p">,</span>
+          <span class="t-k">"aesthetic"</span><span class="t-p">:</span> <span class="t-s">"calm, technical"</span>
+        <span class="t-p">},</span>
+        <span class="t-k">"pillars"</span><span class="t-p">:</span> <span class="t-p">[</span><span class="t-s">"directives"</span><span class="t-p">,</span> <span class="t-s">"mental-models"</span><span class="t-p">,</span> <span class="t-c">…</span><span class="t-p">]</span>
+      <span class="t-p">}</span></code></pre>
+      </div>
   actions:
     - text: Read the identity
       link: /identity/

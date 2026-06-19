@@ -143,3 +143,111 @@ footer .meta {
   font-size: var(--sl-text-2xs);
   letter-spacing: 0.01em;
 }
+
+/* ============================================================================
+   Hero — the dual-surface pitch, made visible.
+   Left: the human headline. Right: what an agent sees (live-looking JSON).
+   A faint dot grid ties the page to the OG cards and nods to the 8pt grid.
+   ========================================================================== */
+
+/* DESIGN: dot-grid backdrop, scoped to the splash hero only (not site-wide). */
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -2rem -50vw;
+  z-index: -1;
+  /* oklch with hex fallback per guardrails */
+  background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+  background-image: radial-gradient(oklch(83% 0.005 256) 1px, transparent 1px);
+  background-size: 24px 24px;
+  /* Fade the grid out toward the edges so it reads as texture, not wallpaper. */
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
+  opacity: 0.6;
+}
+:root[data-theme='dark'] .hero::before {
+  background-image: radial-gradient(#27272a 1px, transparent 1px);
+  background-image: radial-gradient(oklch(27% 0.01 256) 1px, transparent 1px);
+  opacity: 0.8;
+}
+
+/* --- The "agent view" code card ----------------------------------------- */
+/* DESIGN: marks the AI/automation surface — a terminal-style panel. */
+.agent-view {
+  width: 100%;
+  max-width: 30rem;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--sl-color-bg);
+  box-shadow:
+    0 1px 2px hsl(220 20% 10% / 0.04),
+    0 12px 32px -12px hsl(220 20% 10% / 0.12);
+  font-feature-settings: 'tnum';
+}
+:root[data-theme='dark'] .agent-view {
+  background: oklch(15% 0.012 256);
+  background: #14161b;
+}
+
+.agent-view__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--sl-color-hairline);
+  background: var(--sl-color-gray-7, var(--sl-color-gray-6));
+}
+.agent-view__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sl-color-gray-5);
+}
+.agent-view__path {
+  margin-left: 0.5rem;
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--sl-color-text);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+.agent-view__code {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  font-family: var(--sl-font-mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+  background: transparent;
+  tab-size: 2;
+}
+
+/* Minimal JSON syntax accents — calm, not a rainbow. */
+.t-k { color: var(--sl-color-accent); }                /* keys */
+.t-s { color: oklch(52% 0.13 155); color: #1f7a4d; }   /* strings (green) */
+.t-p { color: var(--sl-color-gray-3); }                /* punctuation */
+.t-c { color: var(--sl-color-gray-4); }                /* ellipsis */
+:root[data-theme='dark'] .t-k { color: oklch(72% 0.14 256); color: #6ea8fe; }
+:root[data-theme='dark'] .t-s { color: oklch(78% 0.15 155); color: #5fd0a0; }
+
+/* On wide screens, let the hero copy and the card sit side by side with room. */
+@media (min-width: 50rem) {
+  .agent-view {
+    margin-inline-start: auto;
+  }
+}
+
+/* Tighter code on small screens so more of the JSON fits before it clips. */
+@media (max-width: 30rem) {
+  .agent-view__code {
+    font-size: 0.74rem;
+    padding: 0.9rem 1rem;
+  }
+}

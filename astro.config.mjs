@@ -25,27 +25,30 @@ export default defineConfig({
         alt: 'ContextLup — the /L monogram',
       },
       customCss: ['./src/styles/contextlup.css'],
+      // Per-page Open Graph / Twitter image tags, pointed at generated cards.
+      routeMiddleware: './src/routeData.ts',
       // Light is home; the toggle stays available.
       defaultLocale: 'root',
       social: [
         { icon: 'x.com', label: 'X', href: 'https://x.com/humanlup' },
         { icon: 'github', label: 'GitHub', href: 'https://github.com/localwolfpackai' },
       ],
-      // Agent-facing tags: declare the protocol + manifest right in the <head>.
+      // Site-wide tags. Per-page OG image/title/description are added by the
+      // route middleware (src/routeData.ts); these are the constants.
       head: [
-        {
-          tag: 'link',
-          attrs: { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-        },
-        {
-          tag: 'meta',
-          attrs: { name: 'lupo-protocol-version', content: '1.0.0' },
-        },
+        // Favicon + app-icon kit (generated from the /L monogram into /public).
+        { tag: 'link', attrs: { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' } },
+        { tag: 'link', attrs: { rel: 'icon', href: '/favicon-32.png', sizes: '32x32', type: 'image/png' } },
+        { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' } },
+        { tag: 'link', attrs: { rel: 'manifest', href: '/site.webmanifest' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#fafafa' } },
+        // Agent-facing: declare the protocol version + the machine manifest.
+        { tag: 'meta', attrs: { name: 'lupo-protocol-version', content: '1.0.0' } },
         {
           tag: 'link',
           attrs: { rel: 'alternate', type: 'application/json', href: '/api/manifest.json', title: 'Agent Manifest' },
         },
-        // Open Graph defaults for shared links.
+        // Open Graph / Twitter defaults shared by every page.
         { tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
         { tag: 'meta', attrs: { property: 'og:site_name', content: 'ContextLup' } },
         { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
