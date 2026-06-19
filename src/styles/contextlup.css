@@ -175,79 +175,182 @@ footer .meta {
   opacity: 0.8;
 }
 
-/* --- The "agent view" code card ----------------------------------------- */
-/* DESIGN: marks the AI/automation surface — a terminal-style panel. */
-.agent-view {
+/* --- Hero path art: You → ContextLup → Agent ----------------------------- */
+/* DESIGN: the signature line that traces the connection, drawing on once. */
+.path-art {
   width: 100%;
-  max-width: 30rem;
+  max-width: 22rem;
+  height: auto;
+  color: var(--sl-color-accent);
+}
+/* The dashed line both flows (marching dashes) and draws on once at load. */
+.path-art__line {
+  opacity: 0.85;
+  animation: path-flow 1.4s linear infinite;
+}
+@keyframes path-flow {
+  to { stroke-dashoffset: -22; }
+}
+
+.path-art__label {
+  font-family: var(--sl-font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  fill: var(--sl-color-text);
+}
+.path-art__node circle {
+  /* Soft halo so the endpoints read as "live". */
+  filter: drop-shadow(0 0 6px color-mix(in oklab, var(--sl-color-accent) 45%, transparent));
+}
+
+/* The hub — the /L mark in a framed tile, mid-route. */
+.path-art__hub rect {
+  fill: var(--sl-color-bg);
+  stroke: var(--sl-color-accent);
+  stroke-width: 2;
+}
+.path-art__mark {
+  fill: var(--sl-color-white);
+}
+
+/* Draw-on: nodes and hub fade/scale in, then the line flows. */
+.path-art__node,
+.path-art__hub {
+  opacity: 0;
+  animation: path-pop 0.5s ease-out forwards;
+}
+.path-art__hub { animation-delay: 0.35s; transform-box: fill-box; transform-origin: center; }
+.path-art__node:last-of-type { animation-delay: 0.7s; }
+@keyframes path-pop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .path-art__line { animation: none; }
+  .path-art__node,
+  .path-art__hub { animation: none; opacity: 1; }
+}
+
+/* ============================================================================
+   The one-line prompt card — the site's primary artifact.
+   The thing a human pastes into an agent. Readable, prominent, copyable.
+   ========================================================================== */
+.prompt-card {
+  margin: 0;
   border: 1px solid var(--sl-color-hairline);
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 14px;
   background: var(--sl-color-bg);
+  overflow: hidden;
   box-shadow:
     0 1px 2px hsl(220 20% 10% / 0.04),
-    0 12px 32px -12px hsl(220 20% 10% / 0.12);
-  font-feature-settings: 'tnum';
+    0 16px 40px -20px hsl(220 20% 10% / 0.16);
 }
-:root[data-theme='dark'] .agent-view {
-  background: oklch(15% 0.012 256);
+:root[data-theme='dark'] .prompt-card {
   background: #14161b;
 }
 
-.agent-view__bar {
+.prompt-card__label {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.65rem 0.85rem;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem;
   border-bottom: 1px solid var(--sl-color-hairline);
-  background: var(--sl-color-gray-7, var(--sl-color-gray-6));
-}
-.agent-view__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--sl-color-gray-5);
-}
-.agent-view__path {
-  margin-left: 0.5rem;
   font-family: var(--sl-font-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--sl-color-text);
-  opacity: 0.85;
-  white-space: nowrap;
+  background: color-mix(in oklab, var(--sl-color-accent) 5%, transparent);
 }
-.agent-view__code {
+/* DESIGN: pulsing dot marks this as the live, automate-ready surface. */
+.prompt-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sl-color-accent);
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--sl-color-accent) 60%, transparent);
+  animation: prompt-pulse 2.4s ease-out infinite;
+}
+@keyframes prompt-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--sl-color-accent) 55%, transparent); }
+  70% { box-shadow: 0 0 0 7px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.prompt-card__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.1rem 1.25rem 1.35rem;
+}
+.prompt-card__text {
   margin: 0;
-  padding: 1.1rem 1.25rem;
+  flex: 1;
   font-family: var(--sl-font-mono);
-  font-size: 0.82rem;
-  line-height: 1.7;
-  white-space: pre;
-  overflow-x: auto;
-  background: transparent;
-  tab-size: 2;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--sl-color-white);
+  letter-spacing: -0.01em;
+  /* Keep the long URL from forcing a horizontal scrollbar. */
+  overflow-wrap: anywhere;
 }
 
-/* Minimal JSON syntax accents — calm, not a rainbow. */
-.t-k { color: var(--sl-color-accent); }                /* keys */
-.t-s { color: oklch(52% 0.13 155); color: #1f7a4d; }   /* strings (green) */
-.t-p { color: var(--sl-color-gray-3); }                /* punctuation */
-.t-c { color: var(--sl-color-gray-4); }                /* ellipsis */
-:root[data-theme='dark'] .t-k { color: oklch(72% 0.14 256); color: #6ea8fe; }
-:root[data-theme='dark'] .t-s { color: oklch(78% 0.15 155); color: #5fd0a0; }
-
-/* On wide screens, let the hero copy and the card sit side by side with room. */
-@media (min-width: 50rem) {
-  .agent-view {
-    margin-inline-start: auto;
+/* The copy button — quiet at rest, visceral on click. */
+.prompt-card__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+  background: var(--sl-color-bg);
+  color: var(--sl-color-text);
+  font-family: var(--sl-font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    transform 80ms ease;
+}
+@media (hover: hover) {
+  .prompt-card__copy:hover {
+    border-color: var(--sl-color-accent);
+    background: color-mix(in oklab, var(--sl-color-accent) 7%, var(--sl-color-bg));
   }
 }
+.prompt-card__copy:active {
+  transform: translateY(1px);
+}
+.prompt-card__copy.is-copied {
+  border-color: var(--sl-color-accent);
+  color: var(--sl-color-accent);
+}
 
-/* Tighter code on small screens so more of the JSON fits before it clips. */
+.prompt-card__icon {
+  display: block;
+}
+.prompt-card__icon--check { display: none; }
+.prompt-card__copy.is-copied .prompt-card__icon--copy { display: none; }
+.prompt-card__copy.is-copied .prompt-card__icon--check { display: block; }
+
+/* Hero variant: a touch larger, room to breathe. */
+.prompt-card--hero .prompt-card__text {
+  font-size: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prompt-card__dot { animation: none; }
+}
+
 @media (max-width: 30rem) {
-  .agent-view__code {
-    font-size: 0.74rem;
-    padding: 0.9rem 1rem;
+  .prompt-card__body {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .prompt-card__copy {
+    align-self: flex-start;
   }
 }

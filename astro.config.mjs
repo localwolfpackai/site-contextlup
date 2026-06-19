@@ -21,7 +21,10 @@ export default defineConfig({
       description:
         'A machine-readable knowledge surface. The Lupo Protocol — served to humans as docs, and to agents as an API.',
       logo: {
-        src: './public/logo.svg',
+        // Theme-aware: an <img>-rendered SVG can't inherit currentColor, so
+        // ship explicit light/dark marks tuned to the palette (ink / near-white).
+        light: './public/logo-light.svg',
+        dark: './public/logo-dark.svg',
         alt: 'ContextLup — the /L monogram',
       },
       customCss: ['./src/styles/contextlup.css'],

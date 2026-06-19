@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import PromptCard from '../../components/PromptCard.astro';
+
 This site is dual-surface. Humans read prose; agents read JSON. Both are generated from the same source, so the API never drifts from the docs.
 
 ## Start here
@@ -31,7 +33,7 @@ Each rule in the API carries a `why`. That field is the high-signal part — it'
 
 When I'm working with an agent, I don't re-explain myself. I point it here:
 
-> I'm working on **[project]**. Load `https://contextlup.com/api/manifest.json` for my design DNA, constraints, and operating style, then apply them to everything you produce.
+<PromptCard />
 
 That's the whole pitch. The agent loads the methodology and works as an extension of how I'd have done it.
 
