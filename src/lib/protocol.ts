@@ -10,6 +10,15 @@ import type { ContextNode, ContextRule } from '../content.config';
 export const PROTOCOL_VERSION = '1.0.0' as const;
 export const IDENTITY_NAME = 'Lupo' as const;
 
+/**
+ * The one-line prompt — the site's primary call to action. The whole pitch:
+ * point an agent here instead of re-explaining yourself. Built from the live
+ * origin so the copyable text always references the right host.
+ */
+export function agentPrompt(origin: string): string {
+  return `I'm working on [project]. Load ${origin}/api/manifest.json for my design DNA, constraints, and operating style, then apply them to everything you produce.`;
+}
+
 export type Pillar = ContextNode['pillar'];
 
 export const PILLARS: readonly Pillar[] = [

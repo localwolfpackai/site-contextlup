@@ -3,6 +3,13 @@ dist/
 # generated types
 .astro/
 
+# generated icon kit (rebuilt from public/logo.svg by `npm run build`)
+public/favicon-16.png
+public/favicon-32.png
+public/apple-touch-icon.png
+public/icon-192.png
+public/icon-512.png
+
 # dependencies
 node_modules/
 
