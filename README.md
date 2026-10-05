@@ -1,94 +1,36 @@
 # ContextLup
 
-A machine-readable knowledge surface. The **Lupo Protocol** — served to humans as documentation, and to agents as an API.
+Most documentation is basically a graveyard of good intentions—it tells you what was built six months ago, and usually poorly. This repo is different. It holds the actual rules, logic, and constraints that drive the system.
 
-Most portfolios show the result: *here is what I built*. This one shows the engine — the rules, the logic, and the taste that produce the work. Point an agent at it and it doesn't read a résumé; it loads a methodology.
+Point an AI at this, and it doesn't just skim a summary. It downloads a complete, functional methodology. (Which means less time arguing with a chatbot about why it shouldn't try to use jQuery).
 
-## The idea: one source, two surfaces
+## No More Sync Issues
 
-Every page is a single Markdown file. Pages that carry a structured `node` block in their frontmatter become **Context Nodes** — and that same block is what the JSON API serializes. Author a rule once; the human prose and the machine API are both projections of it. They can't drift, because there's only one copy.
+You write a standard Markdown file. You throw some specific configuration into the frontmatter, and it instantly becomes an active node in the system. That frontmatter is exactly what the API reads.
 
-```
-Markdown frontmatter  ──┬──►  Human docs (Starlight UI: sidebar, search, prose)
-   (the node block)     └──►  Agent API (/api/*.json, /llms.txt)
-```
+The docs you read with your human eyes and the API your AI agent consumes are the exact same file. They literally cannot fall out of sync unless you go out of your way to break them.
 
-## The four pillars
+## The Four Pillars
 
-| Pillar | What it holds |
-| --- | --- |
-| **Directives** | Hard, non-negotiable constraints — design rules, coding style, behavioral rules. |
-| **Mental Models** | How problems get approached — heuristics an agent can mimic. |
-| **Inventory** | The approved parts — the stack and resources in play. |
-| **References** | Curated taste — each reference paired with *why* it earns its place. |
+We split the knowledge base up so neither you nor the agent gets confused:
 
-## The agent API
+* **Directives:** The non-negotiable rules for design and code. Do not cross these lines.
+* **Mental Models:** How to actually think about a problem, so you (or the AI) don't over-engineer a simple feature.
+* **Inventory:** The approved tech stack. If it's not on this list, it doesn't exist here.
+* **References:** An index of things that don't suck. We explain exactly *why* we like them, giving the agent a concrete aesthetic target to aim for instead of just guessing.
 
-Generated at build time from the content collection:
+## The API Map
 
-| Endpoint | Returns |
-| --- | --- |
-| `/api/manifest.json` | The index — identity, pillars, and links to every endpoint. Start here. |
-| `/api/identity.json` | Core directive and design DNA. |
-| `/api/directives.json` | Every hard constraint, flattened into one applicable rule list. |
-| `/api/nodes.json` | The full graph of Context Nodes. |
-| `/llms.txt` | A plain-text map of the whole surface, following the llms.txt convention. |
+The system builds the API statically. More importantly, every single rule requires a `why` field. If you don't explicitly explain the *why*, the agent is going to guess, and its guess will probably be terrible.
 
-Each rule carries a `why`. That field is the high-signal part — it's what lets an agent generalize to a case the rule didn't anticipate.
+* `/api/manifest.json`: The root index and routing table.
+* `/api/identity.json`: Our core design DNA.
+* `/api/directives.json`: Every hard rule, flattened into one big list.
+* `/api/nodes.json`: The map of how everything connects.
+* `/llms.txt`: A plain-text map to just spoon-feed the agent.
 
-## Stack
+## The Stack
 
-- **[Astro](https://astro.build)** + **[Starlight](https://starlight.astro.build)** — content-first, ships near-zero JS, semantic HTML an agent can parse.
-- **TypeScript**, strict. **Zod** schemas validate every Context Node at build time.
-- **Geist / Inter** (self-hosted via Fontsource). Calm, technical, high-contrast. Light-first.
-
-## Develop
-
-```bash
-npm install
-npm run dev        # http://localhost:4321
-npm run build      # static output to ./dist
-npm run check      # astro check — type + content validation
-```
-
-## Add a Context Node
-
-Create a Markdown file under `src/content/docs/<pillar>/` and give it a `node` block:
-
-```markdown
----
-title: My Rule
-description: One line for humans.
-node:
-  pillar: directives          # directives | mental-models | inventory | references
-  summary: One line for agents.
-  rules:
-    - rule: The thing to do.
-      why: Why it matters — the part that generalizes.
-  facts:
-    some_key: some value
-  tags: [example]
----
-
-The human-facing prose goes here.
-```
-
-On the next build it appears in the sidebar, the search index, and every relevant JSON endpoint automatically. The schema lives in [`src/content.config.ts`](src/content.config.ts); the serialization logic in [`src/lib/protocol.ts`](src/lib/protocol.ts).
-
-## Project layout
-
-```
-src/
-├── content/docs/        Context Nodes (Markdown — the single source of truth)
-│   ├── identity.md
-│   ├── agent-protocol.md
-│   ├── directives/
-│   ├── mental-models/
-│   └── inventory/
-├── lib/protocol.ts      Reads the collection, shapes the machine surface
-├── pages/
-│   ├── api/*.json.ts     JSON endpoints
-│   └── llms.txt.ts       Plain-text map
-├── styles/contextlup.css Design system (overrides Starlight tokens)
-└── content.config.ts     Zod schema for the node block
-```
+* **Astro + Starlight:** Content-first, ships barely any JavaScript, and gets out of the way.
+* **TypeScript:** Strict mode everywhere. We aren't animals.
+* **Zod:** Build-time validation for every node. If you mess up the frontmatter, the build fails instantly instead of silently feeding your agent a broken API contract.
