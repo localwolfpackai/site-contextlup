@@ -1,0 +1,21 @@
+Ideas
+
+Ongoing list of ideas to test out and to push this from a smart utility to a world-building engine, we need to expand its horizon. Here are three trajectories to chase:
+
+## Living Ontology: 
+- Instead of just static validation, the system begins to suggest its own mental models. 
+- As the agent encounters friction in the code, it writes proposed changes back to the docs, json or markdown frontmatter for human approval. 
+- It evolves into a collaborative conversation between the creator and the machine's execution.
+
+## Visualizing: 
+- The current output is functional, but we need to see the swarm in motion. Clean map of every active agent referencing the endpoints. 
+- When a directive changes, a dot ripples in the visual graph, showing exactly which agents are updating their context in real-time. 
+
+## Autonomous Solo-Studio: 
+- We package this not just as a tool, but as the operating system for the one-person unicorn. We expand the domain schemas to include business operations, marketing voice, and client onboarding. The agent doesn't just write React components; it reads the identity API to draft outbound correspondence and structure local knowledge graphs. The entire digital footprint operates off a single, unified nervous system.
+
+**Date: 2026-10-04**
+
+---
+
+
