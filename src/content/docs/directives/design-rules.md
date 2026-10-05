@@ -6,25 +6,35 @@ sidebar:
 node:
   pillar: directives
   id: design-rules
-  summary: Visual constraints every interface must respect — 8pt spacing, restrained type scale, light-first high-contrast color, purposeful motion.
+  summary: Universal UI baseline — 4px spacing, a fixed type scale, WCAG AA color tokens, and one main landmark per page.
   facts:
-    spacing_system: 8pt grid
+    spacing_system: 4px scale
     base_unit: 4px
     default_theme: light
+    surface_base: "#F8F9FA"
+    surface_elevated: "#FFFFFF"
+    text_primary: "#1A1A1B"
+    text_muted: "#636975"
+    brand_primary: "#3B52C4"
+    type_scale: 12 / 14 / 18 / 24 / 32
     type_pairing: Geist / Inter
     mono: Geist Mono
     aesthetic: Calm, technical, high-contrast
   rules:
-    - rule: Space everything on a 4px base, 8px rhythm. No arbitrary values like 11px or 13px.
+    - rule: Space everything on a 4px scale (4, 8, 12, 16, 24, 32, 48, 64). No off-scale values.
       why: A shared unit makes spacing decisions automatic and layouts feel composed instead of nudged. If a value isn't on the scale, the design probably doesn't need it.
     - rule: Default to light mode, mobile-first. Design the small screen first, then let it breathe up.
       why: Light-first keeps the aesthetic calm and readable. Mobile-first forces hierarchy decisions early, when they're cheap.
     - rule: Prioritize negative space. When a layout feels off, the fix is usually more room, not more elements.
       why: Whitespace frames content and signals confidence. Crowding signals the opposite.
-    - rule: Use a restrained type scale with strong hierarchy. Geist or Inter for UI and body, Geist Mono for code and rare technical accents (~10% of type).
-      why: A tight pairing reads as intentional. Mono used sparingly carries a technical signal without turning everything into a terminal.
-    - rule: High contrast for text and key actions. No low-contrast gray-on-gray for anything that has to be read or clicked.
-      why: Contrast is legibility and accessibility at once. Subtlety belongs in spacing and motion, not in whether someone can read the words.
+    - rule: Use the type scale 12, 14, 18, 24, 32. Body line-height is 1.5. Heading line-height is 1.2. Never use font-weight 300 on a light background.
+      why: Those five sizes keep hierarchy obvious. Light weight fails contrast even when the color itself is dark.
+    - rule: Use the color tokens. Surface base is #F8F9FA, elevated surfaces are #FFFFFF, primary text is #1A1A1B, muted text is no lighter than #636975 on white, and brand actions are #3B52C4.
+      why: Named tokens keep contrast predictable. Muted text has a floor so small type stays readable.
+    - rule: One main landmark per page. Footer sits outside main. Every nav has an accessible name when more than one nav exists.
+      why: Screen readers and crawlers use landmarks to move through a page. Two mains, or a footer trapped inside main, breaks that map.
+    - rule: Every button, link, and input defines hover, focus-visible, disabled, and active. Focus uses a 2px ring on :focus-visible. Disabled is 50% opacity, grayscale, aria-disabled, and no pointer events. Touch targets are at least 44 by 44 pixels.
+      why: Interaction that only exists on hover is invisible to keyboard and touch users. The ring shows where focus is without flashing on every click.
     - rule: Motion is purposeful and subtle — it explains a change or guides attention, never decorates. Respect prefers-reduced-motion.
       why: Good motion makes an interface feel responsive and legible. Gratuitous motion makes it feel cheap and excludes people who can't tolerate it.
     - rule: No magic numbers in the design. Hierarchy comes from the token scale, not from hand-tuned one-offs.
@@ -34,19 +44,21 @@ node:
 
 These are the constraints I don't relax. They're not style preferences — they're the floor. An interface can be plain and still be right if it respects these; it can be elaborate and still be wrong if it doesn't.
 
-## Spacing — the 8pt grid
+## Spacing — the 4px scale
 
-Everything sits on a 4px base with an 8px rhythm. Margins, padding, gaps, component sizes — all multiples. The payoff isn't rigidity, it's that spacing stops being a decision I agonize over. When something looks slightly off, the answer is almost always "snap it to the grid," not "invent a new value."
-
-If a layout seems to need `11px`, that's usually a signal the design is fighting the system. The honest fix is `8` or `12`, not `11`.
+Margins, padding, gaps, and component sizes sit on 4, 8, 12, 16, 24, 32, 48, and 64. The payoff isn't rigidity. Spacing stops being a decision to agonize over. When something looks slightly off, snap it to the scale.
 
 ## Color & contrast
 
-Light mode is the default. The palette stays calm — mostly neutral, high contrast where it counts, color used as signal rather than decoration. Text and interactive elements have to clear a real contrast bar; I'd rather a thing be obviously legible than subtly tasteful-but-unreadable.
+Light mode is the default. The page sits on `#F8F9FA`. Cards and other raised surfaces sit on `#FFFFFF`. Primary text is `#1A1A1B`. Muted text does not go lighter than `#636975` on white. Links and actions use `#3B52C4`. Those five values are the palette. Anything else is a structural line, not a new color.
 
 ## Type
 
-Geist and Inter carry the interface and the body. Geist Mono shows up for code and the occasional technical detail — roughly a tenth of the type, never the default. The scale is restrained on purpose: a few sizes with clear jumps beats a dozen sizes that blur together.
+Five sizes: 12, 14, 18, 24, 32. Body copy is 14px at a line-height of 1.5. Headings use 1.2. Geist and Inter carry the interface. Geist Mono stays rare. Weight stays at 400 for body and 600 for headings. Weight 300 is out. It fails contrast on a light background even when the color is dark.
+
+## Landmarks & interaction
+
+Each page has one `main`. The footer is outside it. A page with more than one `nav` names each of them. Buttons, links, and inputs have a hover brightness shift, a 2px focus ring that appears for keyboard focus, a disabled state at half opacity, and a slight press. On a phone, the hit area is at least 44 by 44 pixels.
 
 ## Motion
 

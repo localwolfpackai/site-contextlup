@@ -1,0 +1,5 @@
+---
+const { class: className, ...rest } = Astro.props;
+---
+
+<h3 {...rest} class:list={['u-h3', className]}><slot /></h3>

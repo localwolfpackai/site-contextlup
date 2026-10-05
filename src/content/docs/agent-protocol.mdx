@@ -5,6 +5,14 @@ sidebar:
   order: 2
 ---
 
+import H1 from '../../components/markdown/h1.astro';
+import H2 from '../../components/markdown/h2.astro';
+import H3 from '../../components/markdown/h3.astro';
+import Text from '../../components/markdown/text.astro';
+import Link from '../../components/markdown/link.astro';
+
+export const components = { h1: H1, h2: H2, h3: H3, p: Text, a: Link };
+
 This site is dual-surface. Humans read prose; agents read JSON. Both are generated from the same source, so the API never drifts from the docs.
 
 ## Start here

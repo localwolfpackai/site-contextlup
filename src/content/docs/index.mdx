@@ -1,7 +1,6 @@
 ---
 title: ContextLup
 description: A machine-readable knowledge surface. The Lupo Protocol — served to humans as docs, and to agents as an API.
-template: splash
 hero:
   tagline: A persistent, high-signal brain for agents — and a portfolio for my future self. Not what I built. How I think.
   actions:
@@ -16,6 +15,13 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import H1 from '../../components/markdown/h1.astro';
+import H2 from '../../components/markdown/h2.astro';
+import H3 from '../../components/markdown/h3.astro';
+import Text from '../../components/markdown/text.astro';
+import Link from '../../components/markdown/link.astro';
+
+export const components = { h1: H1, h2: H2, h3: H3, p: Text, a: Link };
 
 Stop re-explaining yourself to every new agent. Point it here once:
 

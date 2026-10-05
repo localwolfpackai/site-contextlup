@@ -1,69 +1,224 @@
-/* ============================================================================
-   ContextLup — tokens
-   Light-first neutrals mapped onto Starlight's --sl-* variables.
-   Component styling does not live here. Spacing, type, and color for any
-   new surface come from this scale.
-   ========================================================================== */
+/* Universal UI baseline. Values match src/styles/tokens.ts. */
 
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/geist-mono';
 
 :root {
+  --surface-base: #f8f9fa;
+  --surface-elevated: #ffffff;
+  --text-primary: #1a1a1b;
+  --text-muted: #636975;
+  --brand-primary: #3b52c4;
+  --border: #d5d8de;
+
+  --font-small: 12px;
+  --font-base: 14px;
+  --font-h3: 18px;
+  --font-h2: 24px;
+  --font-h1: 32px;
+  --line-body: 1.5;
+  --line-heading: 1.2;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --z-back: -1;
+  --z-base: 1;
+  --z-overlay: 100;
+  --z-modal: 1000;
+
   --sl-font: 'Geist Variable', 'Inter Variable', system-ui, sans-serif;
   --sl-font-mono: 'Geist Mono Variable', ui-monospace, monospace;
-
-  --cl-accent-hue: 222;
-
   --sl-content-width: 50rem;
-  --sl-line-height: 1.7;
+  --sl-line-height: var(--line-body);
+  --sl-line-height-headings: var(--line-heading);
+  --sl-text-2xs: var(--font-small);
+  --sl-text-xs: var(--font-small);
+  --sl-text-sm: var(--font-base);
+  --sl-text-base: var(--font-base);
+  --sl-text-lg: var(--font-h3);
+  --sl-text-xl: var(--font-h3);
+  --sl-text-2xl: var(--font-h2);
+  --sl-text-3xl: var(--font-h2);
+  --sl-text-4xl: var(--font-h1);
+  --sl-text-5xl: var(--font-h1);
+  --sl-text-6xl: var(--font-h1);
+  --sl-text-h1: var(--font-h1);
+  --sl-text-h2: var(--font-h2);
+  --sl-text-h3: var(--font-h3);
+  --sl-text-h4: var(--font-h3);
+  --sl-text-h5: var(--font-base);
+  --sl-menu-button-size: 44px;
+  --sl-z-index-toc: var(--z-base);
+  --sl-z-index-menu: var(--z-overlay);
+  --sl-z-index-navbar: var(--z-overlay);
+  --sl-z-index-skiplink: var(--z-modal);
 
-  /* 4px base, 8px rhythm. */
-  --cl-space-1: 0.25rem;
-  --cl-space-2: 0.5rem;
-  --cl-space-3: 0.75rem;
-  --cl-space-4: 1rem;
-  --cl-space-6: 1.5rem;
-  --cl-space-8: 2rem;
-  --cl-space-12: 3rem;
+  color-scheme: light;
+  background: var(--surface-base);
+  color: var(--text-primary);
+  scrollbar-gutter: stable;
+  font-weight: 400;
+  line-height: var(--line-body);
 }
 
 :root[data-theme='light'] {
-  --sl-color-white: hsl(220, 13%, 9%);
-  --sl-color-gray-1: hsl(220, 11%, 18%);
-  --sl-color-gray-2: hsl(220, 9%, 31%);
-  --sl-color-gray-3: hsl(220, 7%, 46%);
-  --sl-color-gray-4: hsl(220, 9%, 62%);
-  --sl-color-gray-5: hsl(220, 13%, 82%);
-  --sl-color-gray-6: hsl(220, 18%, 92%);
-  --sl-color-gray-7: hsl(220, 24%, 97%);
-  --sl-color-black: hsl(0, 0%, 100%);
-
-  --sl-color-accent-low: hsl(var(--cl-accent-hue), 90%, 93%);
-  --sl-color-accent: hsl(var(--cl-accent-hue), 78%, 50%);
-  --sl-color-accent-high: hsl(var(--cl-accent-hue), 70%, 32%);
-
-  --sl-color-text-accent: var(--sl-color-accent-high);
-  --sl-color-bg-sidebar: var(--sl-color-black);
-  --sl-color-hairline: hsl(220, 16%, 90%);
-  --sl-color-hairline-light: hsl(220, 16%, 90%);
+  --sl-color-white: var(--text-primary);
+  --sl-color-gray-1: var(--text-primary);
+  --sl-color-gray-2: #2c2e33;
+  --sl-color-gray-3: var(--text-muted);
+  --sl-color-gray-4: #8b919c;
+  --sl-color-gray-5: var(--border);
+  --sl-color-gray-6: #eef0f3;
+  --sl-color-gray-7: var(--surface-base);
+  --sl-color-black: var(--surface-elevated);
+  --sl-color-accent-low: #e7eaf8;
+  --sl-color-accent: var(--brand-primary);
+  --sl-color-accent-high: #2a3c96;
+  --sl-color-text: var(--text-muted);
+  --sl-color-text-accent: var(--brand-primary);
+  --sl-color-bg: var(--surface-base);
+  --sl-color-bg-nav: var(--surface-elevated);
+  --sl-color-bg-sidebar: var(--surface-base);
+  --sl-color-bg-inline-code: #eef0f3;
+  --sl-color-hairline: var(--border);
+  --sl-color-hairline-light: var(--border);
+  --sl-color-hairline-shade: var(--border);
 }
 
 :root[data-theme='dark'] {
-  --sl-color-white: hsl(220, 20%, 97%);
-  --sl-color-gray-1: hsl(220, 14%, 88%);
-  --sl-color-gray-2: hsl(220, 9%, 75%);
-  --sl-color-gray-3: hsl(220, 8%, 55%);
-  --sl-color-gray-4: hsl(220, 9%, 38%);
-  --sl-color-gray-5: hsl(220, 12%, 24%);
-  --sl-color-gray-6: hsl(220, 16%, 15%);
-  --sl-color-black: hsl(220, 22%, 8%);
+  --surface-base: #1a1a1b;
+  --surface-elevated: #24262b;
+  --text-primary: #f8f9fa;
+  --text-muted: #b4b9c4;
+  --brand-primary: #c5cef8;
+  --border: #3a3d44;
+  color-scheme: dark;
 
-  --sl-color-accent-low: hsl(var(--cl-accent-hue), 45%, 18%);
-  --sl-color-accent: hsl(var(--cl-accent-hue), 85%, 62%);
-  --sl-color-accent-high: hsl(var(--cl-accent-hue), 90%, 84%);
+  --sl-color-white: var(--text-primary);
+  --sl-color-gray-1: var(--text-primary);
+  --sl-color-gray-2: #d5d8de;
+  --sl-color-gray-3: var(--text-muted);
+  --sl-color-gray-4: #8b919c;
+  --sl-color-gray-5: #3a3d44;
+  --sl-color-gray-6: #2a2c31;
+  --sl-color-black: var(--surface-base);
+  --sl-color-accent-low: #2a3148;
+  --sl-color-accent: var(--brand-primary);
+  --sl-color-accent-high: var(--brand-primary);
+  --sl-color-text: var(--text-muted);
+  --sl-color-text-accent: var(--brand-primary);
+  --sl-color-bg: var(--surface-base);
+  --sl-color-bg-nav: var(--surface-elevated);
+  --sl-color-bg-sidebar: var(--surface-base);
+  --sl-color-bg-inline-code: #2a2c31;
+  --sl-color-hairline: var(--border);
+  --sl-color-hairline-light: var(--border);
+  --sl-color-hairline-shade: var(--border);
+}
 
-  --sl-color-text-accent: var(--sl-color-accent-high);
-  --sl-color-hairline: hsl(220, 16%, 16%);
-  --sl-color-hairline-light: hsl(220, 16%, 16%);
+:where(h1, h2, h3, h4, h5, h6) {
+  font-weight: 600;
+  line-height: var(--line-heading);
+  color: var(--text-primary);
+}
+
+h1,
+.u-h1 {
+  font-size: var(--font-h1);
+}
+
+h2,
+.u-h2 {
+  font-size: var(--font-h2);
+}
+
+h3,
+.u-h3 {
+  font-size: var(--font-h3);
+}
+
+p,
+.u-text {
+  font-size: var(--font-base);
+  line-height: var(--line-body);
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.sl-markdown-content {
+  font-size: var(--font-base);
+  color: var(--text-primary);
+}
+
+a,
+.u-link {
+  color: var(--brand-primary);
+}
+
+.card {
+  background: var(--surface-elevated);
+  border-color: var(--border);
+}
+
+.sl-markdown-content :is(img, video, canvas, iframe) {
+  max-width: 100%;
+  height: auto;
+}
+
+:where(a, button, input, summary, [role='button']) {
+  cursor: pointer;
+}
+
+:where(a, button, .sl-link-button):focus {
+  outline: none;
+}
+
+:where(a, button, input, textarea, select, .sl-link-button):focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  :where(button, .sl-link-button):hover {
+    filter: brightness(1.1);
+  }
+
+  :where(.sl-markdown-content a, a.u-link):hover {
+    color: color-mix(in srgb, var(--brand-primary) 90%, white);
+  }
+}
+
+:where(button, .sl-link-button, a.u-link):active {
+  transform: scale(0.98);
+}
+
+:where(:disabled, [aria-disabled='true']) {
+  opacity: 0.5;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+button,
+.sl-link-button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+dialog,
+[role='dialog'] {
+  z-index: var(--z-modal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(button, .sl-link-button, a.u-link):active {
+    transform: none;
+  }
 }
