@@ -1,0 +1,11 @@
+{
+  "name": "ContextLup (Astro + Starlight)",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "astro-dev",
+      "command": "npm run dev -- --host"
+    }
+  ],
+  "ports": [4321]
+}
