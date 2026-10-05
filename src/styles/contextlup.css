@@ -1,28 +1,35 @@
 /* ============================================================================
-   ContextLup — design system
-   Calm, technical, high-contrast. Light-first. Editorial-tech.
-   Overrides Starlight's tokens (the real --sl-* variables) with a restrained
-   neutral palette, a Geist/Inter pairing, and an 8pt-aligned reading measure.
+   ContextLup — tokens
+   Light-first neutrals mapped onto Starlight's --sl-* variables.
+   Component styling does not live here. Spacing, type, and color for any
+   new surface come from this scale.
    ========================================================================== */
 
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/geist-mono';
 
-/* --- Type --------------------------------------------------------------- */
 :root {
-  /* DESIGN: Geist carries UI/body; Geist Mono for code (~10% of type). */
   --sl-font: 'Geist Variable', 'Inter Variable', system-ui, sans-serif;
   --sl-font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
-  /* A calm technical blue — used as signal, never as decoration. */
   --cl-accent-hue: 222;
+
+  --sl-content-width: 50rem;
+  --sl-line-height: 1.7;
+
+  /* 4px base, 8px rhythm. */
+  --cl-space-1: 0.25rem;
+  --cl-space-2: 0.5rem;
+  --cl-space-3: 0.75rem;
+  --cl-space-4: 1rem;
+  --cl-space-6: 1.5rem;
+  --cl-space-8: 2rem;
+  --cl-space-12: 3rem;
 }
 
-/* --- Light mode (the default) ------------------------------------------- */
 :root[data-theme='light'] {
-  /* Near-neutral grays, high-contrast ink. Warmth kept out on purpose. */
-  --sl-color-white: hsl(220, 13%, 9%); /* primary ink */
+  --sl-color-white: hsl(220, 13%, 9%);
   --sl-color-gray-1: hsl(220, 11%, 18%);
   --sl-color-gray-2: hsl(220, 9%, 31%);
   --sl-color-gray-3: hsl(220, 7%, 46%);
@@ -30,7 +37,7 @@
   --sl-color-gray-5: hsl(220, 13%, 82%);
   --sl-color-gray-6: hsl(220, 18%, 92%);
   --sl-color-gray-7: hsl(220, 24%, 97%);
-  --sl-color-black: hsl(0, 0%, 100%); /* page background */
+  --sl-color-black: hsl(0, 0%, 100%);
 
   --sl-color-accent-low: hsl(var(--cl-accent-hue), 90%, 93%);
   --sl-color-accent: hsl(var(--cl-accent-hue), 78%, 50%);
@@ -42,7 +49,6 @@
   --sl-color-hairline-light: hsl(220, 16%, 90%);
 }
 
-/* --- Dark mode (available, but light is home) --------------------------- */
 :root[data-theme='dark'] {
   --sl-color-white: hsl(220, 20%, 97%);
   --sl-color-gray-1: hsl(220, 14%, 88%);
@@ -60,297 +66,4 @@
   --sl-color-text-accent: var(--sl-color-accent-high);
   --sl-color-hairline: hsl(220, 16%, 16%);
   --sl-color-hairline-light: hsl(220, 16%, 16%);
-}
-
-/* --- Reading measure & rhythm ------------------------------------------- */
-/* DESIGN: a tighter content width reads more editorial than the wide default. */
-:root {
-  --sl-content-width: 50rem;
-  --sl-line-height: 1.7;
-}
-
-/* The site title sits a touch tighter and heavier — a small wordmark cue. */
-.site-title {
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-/* The /L monogram in the header inherits ink color via currentColor. */
-.site-title svg,
-header .site-title img {
-  color: var(--sl-color-white);
-}
-
-/* --- Headings: tightened tracking for the editorial-tech feel ----------- */
-.sl-markdown-content h1,
-.sl-markdown-content h2,
-.sl-markdown-content h3,
-.content-panel h1 {
-  letter-spacing: -0.02em;
-  font-weight: 600;
-}
-
-/* --- Inline code & blocks: mono carries the technical signal ------------ */
-.sl-markdown-content code:not(:where(.expressive-code *)) {
-  font-size: 0.875em;
-  letter-spacing: -0.01em;
-}
-
-/* --- Tables: hairlines, not heavy borders ------------------------------- */
-.sl-markdown-content table {
-  font-size: var(--sl-text-sm);
-}
-.sl-markdown-content th {
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-/* --- Hero (splash homepage): give the tagline room to breathe ----------- */
-.hero > .stack {
-  gap: clamp(1.5rem, 4vw, 2.5rem);
-}
-.hero .tagline {
-  max-width: 42ch;
-  text-wrap: balance;
-}
-
-/* --- Cards: calmer borders, subtle lift on hover ------------------------ */
-.card {
-  border-color: var(--sl-color-hairline);
-  transition:
-    border-color 150ms ease,
-    transform 150ms ease;
-}
-@media (hover: hover) {
-  .card:hover {
-    border-color: var(--sl-color-accent);
-    transform: translateY(-2px);
-  }
-}
-
-/* A11Y: honor reduced-motion — kill the lift for anyone who opts out. */
-@media (prefers-reduced-motion: reduce) {
-  .card,
-  .card:hover {
-    transition: none;
-    transform: none;
-  }
-}
-
-/* --- Footer note: quiet, mono, low-key ---------------------------------- */
-footer .meta {
-  font-family: var(--sl-font-mono);
-  font-size: var(--sl-text-2xs);
-  letter-spacing: 0.01em;
-}
-
-/* ============================================================================
-   Hero — the dual-surface pitch, made visible.
-   Left: the human headline. Right: what an agent sees (live-looking JSON).
-   A faint dot grid ties the page to the OG cards and nods to the 8pt grid.
-   ========================================================================== */
-
-/* DESIGN: dot-grid backdrop, scoped to the splash hero only (not site-wide). */
-.hero {
-  position: relative;
-  isolation: isolate;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: -2rem -50vw;
-  z-index: -1;
-  /* oklch with hex fallback per guardrails */
-  background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
-  background-image: radial-gradient(oklch(83% 0.005 256) 1px, transparent 1px);
-  background-size: 24px 24px;
-  /* Fade the grid out toward the edges so it reads as texture, not wallpaper. */
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
-  opacity: 0.6;
-}
-:root[data-theme='dark'] .hero::before {
-  background-image: radial-gradient(#27272a 1px, transparent 1px);
-  background-image: radial-gradient(oklch(27% 0.01 256) 1px, transparent 1px);
-  opacity: 0.8;
-}
-
-/* --- Hero path art: You → ContextLup → Agent ----------------------------- */
-/* DESIGN: the signature line that traces the connection, drawing on once. */
-.path-art {
-  width: 100%;
-  max-width: 22rem;
-  height: auto;
-  color: var(--sl-color-accent);
-}
-/* The dashed line both flows (marching dashes) and draws on once at load. */
-.path-art__line {
-  opacity: 0.85;
-  animation: path-flow 1.4s linear infinite;
-}
-@keyframes path-flow {
-  to { stroke-dashoffset: -22; }
-}
-
-.path-art__label {
-  font-family: var(--sl-font-mono);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  fill: var(--sl-color-text);
-}
-.path-art__node circle {
-  /* Soft halo so the endpoints read as "live". */
-  filter: drop-shadow(0 0 6px color-mix(in oklab, var(--sl-color-accent) 45%, transparent));
-}
-
-/* The hub — the /L mark in a framed tile, mid-route. */
-.path-art__hub rect {
-  fill: var(--sl-color-bg);
-  stroke: var(--sl-color-accent);
-  stroke-width: 2;
-}
-.path-art__mark {
-  fill: var(--sl-color-white);
-}
-
-/* Draw-on: nodes and hub fade/scale in, then the line flows. */
-.path-art__node,
-.path-art__hub {
-  opacity: 0;
-  animation: path-pop 0.5s ease-out forwards;
-}
-.path-art__hub { animation-delay: 0.35s; transform-box: fill-box; transform-origin: center; }
-.path-art__node:last-of-type { animation-delay: 0.7s; }
-@keyframes path-pop {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .path-art__line { animation: none; }
-  .path-art__node,
-  .path-art__hub { animation: none; opacity: 1; }
-}
-
-/* ============================================================================
-   The one-line prompt card — the site's primary artifact.
-   The thing a human pastes into an agent. Readable, prominent, copyable.
-   ========================================================================== */
-.prompt-card {
-  margin: 0;
-  border: 1px solid var(--sl-color-hairline);
-  border-radius: 14px;
-  background: var(--sl-color-bg);
-  overflow: hidden;
-  box-shadow:
-    0 1px 2px hsl(220 20% 10% / 0.04),
-    0 16px 40px -20px hsl(220 20% 10% / 0.16);
-}
-:root[data-theme='dark'] .prompt-card {
-  background: #14161b;
-}
-
-.prompt-card__label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.1rem;
-  border-bottom: 1px solid var(--sl-color-hairline);
-  font-family: var(--sl-font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--sl-color-text);
-  background: color-mix(in oklab, var(--sl-color-accent) 5%, transparent);
-}
-/* DESIGN: pulsing dot marks this as the live, automate-ready surface. */
-.prompt-card__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--sl-color-accent);
-  box-shadow: 0 0 0 0 color-mix(in oklab, var(--sl-color-accent) 60%, transparent);
-  animation: prompt-pulse 2.4s ease-out infinite;
-}
-@keyframes prompt-pulse {
-  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--sl-color-accent) 55%, transparent); }
-  70% { box-shadow: 0 0 0 7px transparent; }
-  100% { box-shadow: 0 0 0 0 transparent; }
-}
-
-.prompt-card__body {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.25rem 1.1rem 1.25rem 1.35rem;
-}
-.prompt-card__text {
-  margin: 0;
-  flex: 1;
-  font-family: var(--sl-font-mono);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--sl-color-white);
-  letter-spacing: -0.01em;
-  /* Keep the long URL from forcing a horizontal scrollbar. */
-  overflow-wrap: anywhere;
-}
-
-/* The copy button — quiet at rest, visceral on click. */
-.prompt-card__copy {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  flex-shrink: 0;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid var(--sl-color-hairline);
-  border-radius: 8px;
-  background: var(--sl-color-bg);
-  color: var(--sl-color-text);
-  font-family: var(--sl-font-mono);
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition:
-    border-color 150ms ease,
-    background-color 150ms ease,
-    transform 80ms ease;
-}
-@media (hover: hover) {
-  .prompt-card__copy:hover {
-    border-color: var(--sl-color-accent);
-    background: color-mix(in oklab, var(--sl-color-accent) 7%, var(--sl-color-bg));
-  }
-}
-.prompt-card__copy:active {
-  transform: translateY(1px);
-}
-.prompt-card__copy.is-copied {
-  border-color: var(--sl-color-accent);
-  color: var(--sl-color-accent);
-}
-
-.prompt-card__icon {
-  display: block;
-}
-.prompt-card__icon--check { display: none; }
-.prompt-card__copy.is-copied .prompt-card__icon--copy { display: none; }
-.prompt-card__copy.is-copied .prompt-card__icon--check { display: block; }
-
-/* Hero variant: a touch larger, room to breathe. */
-.prompt-card--hero .prompt-card__text {
-  font-size: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .prompt-card__dot { animation: none; }
-}
-
-@media (max-width: 30rem) {
-  .prompt-card__body {
-    flex-direction: column;
-    gap: 0.85rem;
-  }
-  .prompt-card__copy {
-    align-self: flex-start;
-  }
 }
