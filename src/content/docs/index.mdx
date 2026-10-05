@@ -1,30 +1,8 @@
 ---
 title: ContextLup
 description: A machine-readable knowledge surface. The Lupo Protocol — served to humans as docs, and to agents as an API.
-template: splash
 hero:
   tagline: A persistent, high-signal brain for agents — and a portfolio for my future self. Not what I built. How I think.
-  image:
-    html: |
-      <svg class="path-art" viewBox="0 0 360 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A line connecting you to your agent, routed through ContextLup">
-        <!-- the connecting path: You → ContextLup → Agent -->
-        <path class="path-art__line" d="M60 60 C 60 150, 180 110, 180 175 S 300 200, 300 240" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 7"/>
-        <!-- node: You -->
-        <g class="path-art__node">
-          <circle cx="60" cy="60" r="9" fill="currentColor"/>
-          <text x="60" y="38" text-anchor="middle" class="path-art__label">You</text>
-        </g>
-        <!-- node: ContextLup (the /L mark, mid-route) -->
-        <g class="path-art__hub">
-          <rect x="150" y="145" width="60" height="60" rx="14"/>
-          <path d="M180 162 H187 V190 H200 V197 H181.5 V183 L171.5 197 H164 L180 162 Z" class="path-art__mark"/>
-        </g>
-        <!-- node: Agent -->
-        <g class="path-art__node">
-          <circle cx="300" cy="240" r="9" fill="currentColor"/>
-          <text x="300" y="270" text-anchor="middle" class="path-art__label">Agent</text>
-        </g>
-      </svg>
   actions:
     - text: Read the identity
       link: /identity/
@@ -37,11 +15,19 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
-import PromptCard from '../../components/PromptCard.astro';
+import H1 from '../../components/markdown/h1.astro';
+import H2 from '../../components/markdown/h2.astro';
+import H3 from '../../components/markdown/h3.astro';
+import Text from '../../components/markdown/text.astro';
+import Link from '../../components/markdown/link.astro';
+
+export const components = { h1: H1, h2: H2, h3: H3, p: Text, a: Link };
 
 Stop re-explaining yourself to every new agent. Point it here once:
 
-<PromptCard variant="hero" />
+```text
+I'm working on [project]. Load https://contextlup.com/api/manifest.json for my design DNA, constraints, and operating style, then apply them to everything you produce.
+```
 
 ## A different kind of portfolio
 

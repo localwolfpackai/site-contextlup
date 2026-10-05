@@ -1,6 +1,7 @@
 import sharp from 'sharp';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { tokens } from '../styles/tokens';
 
 /**
  * Branded OG card generator.
@@ -13,12 +14,8 @@ import { join } from 'node:path';
 const WIDTH = 1200;
 const HEIGHT = 630;
 
-// Brand tokens — mirror the light-mode design system.
-const PAPER = '#fafafa';
-const INK = '#18181b';
-const MUTED = '#52525b';
-const HAIRLINE = '#e4e4e7';
-const ACCENT = '#2c5fef'; // the calm technical blue
+const { surfaceBase: PAPER, textPrimary: INK, textMuted: MUTED, border: HAIRLINE, brandPrimary: ACCENT } =
+  tokens.light;
 
 const MONOGRAM_PATH = 'M240 0H330V350H500V440H247.06V175L102.52 440H0L240 0Z';
 const MONOGRAM_VIEWBOX = '-40 -40 580 520';

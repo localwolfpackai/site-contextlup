@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { landmarkFooter } from './src/plugins/landmark-footer.mjs';
 
 // The canonical origin. Used for absolute URLs in the agent API + OG tags.
 // Resolution order:
@@ -15,18 +16,15 @@ const SITE = process.env.SITE_URL ?? (vercelUrl ? `https://${vercelUrl}` : 'http
 // https://astro.build/config
 export default defineConfig({
   site: SITE,
+  vite: {
+    // Landmark plugin rewrites Starlight's page shell.
+    plugins: [landmarkFooter()],
+  },
   integrations: [
     starlight({
       title: 'ContextLup',
       description:
         'A machine-readable knowledge surface. The Lupo Protocol — served to humans as docs, and to agents as an API.',
-      logo: {
-        // Theme-aware: an <img>-rendered SVG can't inherit currentColor, so
-        // ship explicit light/dark marks tuned to the palette (ink / near-white).
-        light: './public/logo-light.svg',
-        dark: './public/logo-dark.svg',
-        alt: 'ContextLup — the /L monogram',
-      },
       customCss: ['./src/styles/contextlup.css'],
       // Per-page Open Graph / Twitter image tags, pointed at generated cards.
       routeMiddleware: './src/routeData.ts',
@@ -44,7 +42,7 @@ export default defineConfig({
         { tag: 'link', attrs: { rel: 'icon', href: '/favicon-32.png', sizes: '32x32', type: 'image/png' } },
         { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' } },
         { tag: 'link', attrs: { rel: 'manifest', href: '/site.webmanifest' } },
-        { tag: 'meta', attrs: { name: 'theme-color', content: '#fafafa' } },
+        { tag: 'meta', attrs: { name: 'theme-color', content: '#F8F9FA' } },
         // Agent-facing: declare the protocol version + the machine manifest.
         { tag: 'meta', attrs: { name: 'lupo-protocol-version', content: '1.0.0' } },
         {

@@ -5,7 +5,13 @@ sidebar:
   order: 2
 ---
 
-import PromptCard from '../../components/PromptCard.astro';
+import H1 from '../../components/markdown/h1.astro';
+import H2 from '../../components/markdown/h2.astro';
+import H3 from '../../components/markdown/h3.astro';
+import Text from '../../components/markdown/text.astro';
+import Link from '../../components/markdown/link.astro';
+
+export const components = { h1: H1, h2: H2, h3: H3, p: Text, a: Link };
 
 This site is dual-surface. Humans read prose; agents read JSON. Both are generated from the same source, so the API never drifts from the docs.
 
@@ -33,7 +39,9 @@ Each rule in the API carries a `why`. That field is the high-signal part — it'
 
 When I'm working with an agent, I don't re-explain myself. I point it here:
 
-<PromptCard />
+```text
+I'm working on [project]. Load https://contextlup.com/api/manifest.json for my design DNA, constraints, and operating style, then apply them to everything you produce.
+```
 
 That's the whole pitch. The agent loads the methodology and works as an extension of how I'd have done it.
 
