@@ -34,3 +34,14 @@ The system builds the API statically. More importantly, every single rule requir
 * **Astro + Starlight:** Content-first, ships barely any JavaScript, and gets out of the way.
 * **TypeScript:** Strict mode everywhere. We aren't animals.
 * **Zod:** Build-time validation for every node. If you mess up the frontmatter, the build fails instantly instead of silently feeding your agent a broken API contract.
+
+## Local development
+
+Requires Node 22+. Install and run the same contract Cloud Agents use (see `.cursor/environment.json`):
+
+```bash
+npm ci
+npm run dev -- --host
+```
+
+Open [http://localhost:4321](http://localhost:4321). Useful checks: `npm run check`, `npm run build`.
