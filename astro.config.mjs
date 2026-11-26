@@ -10,8 +10,10 @@ import { landmarkFooter } from './src/plugins/landmark-footer.mjs';
 //   3. contextlup.com — the eventual canonical, used for local builds.
 // Until the real domain is live, Vercel's staging URL keeps the agent API's
 // absolute links pointing at a host that actually resolves.
-const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-const SITE = process.env.SITE_URL ?? (vercelUrl ? `https://${vercelUrl}` : 'https://contextlup.com');
+// A blank value counts as unset, so an empty `SITE_URL=` line can't break the build.
+const override = process.env.SITE_URL?.trim();
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+const SITE = override || (vercelUrl ? `https://${vercelUrl}` : 'https://contextlup.com');
 
 // https://astro.build/config
 export default defineConfig({
